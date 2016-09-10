@@ -1,15 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "util.h"
 
-#define MSG_NOME_PROGRAMA "Montador Wombat2\n"
-#define MSG_COPYRIGHT "(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <seuemailcabuloso@emai.com>\n"
-#define MSG_USO "    Uso: %s NOME_ARQUIVO [NOME_ARQUIVO_SAIDA]\n"
+#define MSG_NOME_PROGRAMA		"Montador Wombat2\n"
+#define MSG_COPYRIGHT 			"(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <seuemailcabuloso@emai.com>\n"
+#define MSG_USO							"    Uso: %s NOME_ARQUIVO [NOME_ARQUIVO_SAIDA]\n"
 
 // Primeira passada do montador
 void pass_one(FILE *entrada)
 {
-	printf("pass_one\n");
+	initialize_symbol_table();
+	int location_counter = 0;
+	char *line;
+	while((line = get_next_line(entrada))){
+		char *token = strtok(line, "\t ");
+		while(token){
+			if(token[0] == ';'){ // Comentario, ignora resto da linha
+				break;
+			}
+			if(token[strlen(token)-1] == ':'){ // Label, insere na tabela de simbolos
+				token[strlen(token)-1] = '\0';
+				insert_symbol(token, location_counter);
+			} else if(get_opcode_param_by_name(token) > 0){ // Verifica se eh opcode
+				location_counter += 1;
+			}
+			token = strtok(NULL, "\t ");
+		}
+		free(line);
+	}
 }
 
 // Segunda passada do montador
@@ -49,6 +68,8 @@ int main(int argc, char *argv[])
 	FILE *objeto = fopen(s, "w+");
 
 	pass_one(entrada); // Passada 1 para definicao da tabela de simbolos
+
+	print_symbol_table();
 	pass_two(entrada, objeto); // Codificacao com enderecos descomplicados
 
 	fclose(entrada);
