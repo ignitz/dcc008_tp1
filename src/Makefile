@@ -122,7 +122,7 @@ USE_VERSION := false
 ifeq ($(shell git describe > /dev/null 2>&1 ; echo $$?), 0)
 	USE_VERSION := true
 	VERSION := $(shell git describe --tags --long --dirty --always | \
-		sed 's/v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)-\?.*-\([0-9]*\)-\(.*\)/\1 \2 \3 \4 \5/g)
+		sed 's/v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)-\?.*-\([0-9]*\)-\(.*\)/\1 \2 \3 \4 \5/g')
 	VERSION_MAJOR := $(word 1, $(VERSION))
 	VERSION_MINOR := $(word 2, $(VERSION))
 	VERSION_PATCH := $(word 3, $(VERSION))
@@ -191,6 +191,17 @@ clean:
 	@echo "Deleting directories"
 	@$(RM) -r build
 	@$(RM) -r bin
+	@echo "Deleting output files"
+	@$(RM) *.out
+
+# Run the executable in bin folder (Yuri)
+run:
+	@echo "Running $(BIN_NAME)"
+	@./$(BIN_NAME) ../files/W2-1.a -o wombat.out
+
+# Only to show our names (Yuri)
+about:
+	@./$(BIN_NAME)
 
 # Main rule, checks the executable and symlinks to the output
 all: $(BIN_PATH)/$(BIN_NAME)

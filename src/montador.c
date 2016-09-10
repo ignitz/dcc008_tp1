@@ -3,19 +3,19 @@
 #include <string.h>
 
 #define MSG_NOME_PROGRAMA "Montador Wombat2\n"
-#define MSG_COPYRIGHT "(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <seuemailcabuloso@emai.com>"
-#define MSG_USO "Uso: %s NOME_ARQUIVO [NOME_ARQUIVO_SAIDA]\n"
+#define MSG_COPYRIGHT "(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <seuemailcabuloso@emai.com>\n"
+#define MSG_USO "    Uso: %s NOME_ARQUIVO [NOME_ARQUIVO_SAIDA]\n"
 
 // Primeira passada do montador
 void pass_one(FILE *entrada)
 {
-
+	printf("pass_one\n");
 }
 
 // Segunda passada do montador
 void pass_two(FILE *entrada, FILE *objeto)
 {
-
+	printf("pass_two\n");
 }
 
 int main(int argc, char *argv[])
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	}
 
 	if(saida == 0){
-		s = "exec.sa"; // Nome padrão para geracao de executavel
+		s = "exec.out"; // Nome padrão para geracao de executavel
 	}
 
 	FILE *entrada = fopen(e, "r");
