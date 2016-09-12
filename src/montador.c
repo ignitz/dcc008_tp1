@@ -22,8 +22,8 @@ void pass_one(FILE *entrada)
 			if(token[strlen(token)-1] == ':'){ // Label, insere na tabela de simbolos
 				token[strlen(token)-1] = '\0';
 				insert_symbol(token, location_counter);
-			} else if(get_opcode_param_by_name(token) > 0){ // Verifica se eh opcode
-				location_counter += 1;
+			} else if(get_opcode_param_by_name(token) >= 0){
+				location_counter += 1; // Verifica se eh opcode e conta como mais byte deslocado
 			}
 			token = strtok(NULL, "\t ");
 		}
@@ -34,7 +34,35 @@ void pass_one(FILE *entrada)
 // Segunda passada do montador
 void pass_two(FILE *entrada, FILE *objeto)
 {
-	printf("pass_two\n");
+	print_symbol_table(); // DEBUG
+
+	char *line; // String temporária para linha do assembly
+	char *token;
+	fseek(entrada, 0, SEEK_SET); // Posiciona no início do arquivo
+
+	while (line = get_next_line(entrada)) {
+		token = strtok(line, "\t ");
+
+		while (token) {
+			if (token[0] == ';') {
+				break;
+			}
+
+			if (token[strlen(token)-1] != ':') { // Se não for label
+				if (get_opcode_param_by_name(token) >= 0) {
+					printf("%s\n", token);
+				}
+				printf("%d\t", get_opcode_param_by_name(token));
+			}
+			else {
+				// do nothing
+			}
+			token = strtok(NULL, "\t ");
+		}
+
+		printf("\n"); // DEBUG
+	}
+	free(line);
 }
 
 int main(int argc, char *argv[])
@@ -68,8 +96,6 @@ int main(int argc, char *argv[])
 	FILE *objeto = fopen(s, "w+");
 
 	pass_one(entrada); // Passada 1 para definicao da tabela de simbolos
-
-	print_symbol_table();
 	pass_two(entrada, objeto); // Codificacao com enderecos descomplicados
 
 	fclose(entrada);

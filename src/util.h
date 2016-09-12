@@ -6,7 +6,7 @@
 
 // Tabela de instrucoes
 typedef struct {
-	char name[8];
+	char name[15];
 	int v; // Valor do opcode
 } Tabela_Opcodes;
 

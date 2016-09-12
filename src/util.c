@@ -50,9 +50,8 @@ int get_opcode_param_by_name(char *name)
 {
 	int i;
 	for(i = 0; i < MAX_OPCODE; i++){
-		if(strcmp(opcode_table[i].name, name)==0){
+		if(strcmp(opcode_table[i].name, name) == 0)
 			return opcode_table[i].v;
-		}
 	}
 	return -1;
 }
