@@ -25,7 +25,10 @@ int get_opcode_param_by_name(char *name);
 
 char *get_next_line(FILE *f);
 
+int get_operands(int buffer);
+
 // DEBUG
 void print_symbol_table();
+void print_binary(int x);
 
 #endif

@@ -38,10 +38,12 @@ void pass_two(FILE *entrada, FILE *objeto)
 
 	char *line; // String temporária para linha do assembly
 	char *token;
+	int buffer; // Para o byte binário
 	fseek(entrada, 0, SEEK_SET); // Posiciona no início do arquivo
 
 	while (line = get_next_line(entrada)) {
 		token = strtok(line, "\t ");
+		buffer = 0;
 
 		while (token) {
 			if (token[0] == ';') {
@@ -50,18 +52,21 @@ void pass_two(FILE *entrada, FILE *objeto)
 
 			if (token[strlen(token)-1] != ':') { // Se não for label
 				if (get_opcode_param_by_name(token) >= 0) {
+					buffer = get_opcode_param_by_name(token);
+
 					printf("%s\n", token);
+
+					buffer = get_operands(buffer);
 				}
-				printf("%d\t", get_opcode_param_by_name(token));
-			}
-			else {
-				// do nothing
 			}
 			token = strtok(NULL, "\t ");
 		}
 
-		printf("\n"); // DEBUG
+		// printf("\n"); // DEBUG
+		// fwrite(&buffer, sizeof(uint8_t), 1, objeto);
+		print_binary(buffer);
 	}
+
 	free(line);
 }
 
