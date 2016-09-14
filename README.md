@@ -58,23 +58,24 @@ A máquina a ser utilizada é a *Wombat2*, projetada para uso no simulador *CPUS
   - \_[rótulo:] operador [operando(s)] [;comentário]  
   Ou Seja:
   - Se houver algum rótulo (*label*), ele será definido no início da linha. Todo rótulo deverá iniciar com um *underscore* ("\_") e finalizar com dois-pontos (":").  
-  Exemplo: *_label1: add r0 r1 r2 ;soma de dois números*
+  Exemplo: **_label1: add r0 r1 r2 ;soma de dois números**
   - A presença do operador é obrigatória, pois o mesmo identifica a instrução de máquina a ser executada.
   - A presença ou não de operandos depende da instrução, tendo em vista que o número de operandos varia de instrução para instrução. Se houverem dois operandos, estes serão separados por espaços (" ").
   - Um comentário pode ser incluído opcionalmente no fim da linha, devendo necessariamente começar por um ponto-e-vírgula (;) e devendo ser ignorado pelo montador.
   - O endereço de memória indicado nos operandos das instruções, inclusive nas de desvio, é a posição absoluta da memória, ou seja, nenhum pré-tratamento deve ser feito sobre esse endereço.
   - Rótulo, operador, operandos e comentário deverão ser separados por espaços (" "), assim como dois operandos mencionados anteriormente. Poderá haver mais de um espaço, o que não deve afetar o funcionamento do montador.
 - Não deve haver linhas vazias e linhas contendo apenas comentários ou rótulos.
-- A pseudo-instrução *.data* (inclui ponto no nome) deverá ser tratada pelo montador, e sua função será a de reservar uma posição da memória da máquina *Wombat2*.
-  - Formato: *label: .data num_bytes valor_inicial*
+- A pseudo-instrução **.data** (inclui ponto no nome) deverá ser tratada pelo montador, e sua função será a de reservar uma posição da memória da máquina *Wombat2*.
+  - Formato: **label: .data num_bytes valor_inicial**
   - A instrução servirá para alocar uma região de memória de tamanho *‘num_bytes’*, com "*valor inicial*". Essa região de memória será identificada pelo rótulo ‘*label*’, o qual pode ser usado ao longo do código *Assembly* para acessar aquela região de memória.
   - A política de alocação de variáveis na memória deverá ser definida pelo montador. A documentação deve explicar e justificar como foi feita a alocação (por exemplo o início da memória de dados, se a alocação cresce para cima ou para baixo, entre outras definições). Deve-se ficar atento com a definição dessa política, de forma que não haja conflitos com a memória de pilha (indicada pelo registrador *sp – Stack Pointer*), a ser utilizada em chamadas de funções e procedimentos.
 - IMPORTANTE: o programa a ser carregado na máquina deverá sempre iniciar na posição 0 (zero) de memória, uma vez que o contador de programa (PC) da máquina *Wombat2* é inicializado por padrão com este valor.
 
 ### Formato de Entrada de Dados no Montador
 
-O programa a ser traduzido pelo montador deverá ser escrito em um arquivo texto simples com formato "*.a*", sendo que as instruções devem ser dispostas uma por linha no arquivo, e deverão ser lidas pelo montador. Um arquivo exemplo será disponibilizado no Moodle. **Atenção**: O arquivo de exemplo não deve ser utilizado como teste oficial do montador implementado.
-Deverão ser escritos ao menos **dois** programas em Assembly que, juntos, executem ao menos dois terços das instruções da máquina *Wombat2* e ao menos uma chamada de função ou procedimento.
+O programa a ser traduzido pelo montador deverá ser escrito em um arquivo texto simples com formato "*.a*", sendo que as instruções devem ser dispostas uma por linha no arquivo, e deverão ser lidas pelo montador. Um arquivo exemplo será disponibilizado no Moodle.  
+**Atenção**: O arquivo de exemplo não deve ser utilizado como teste oficial do montador implementado.
+Deverão ser escritos ao menos **dois** programas em Assembly que, juntos, executem ao menos dois terços das instruções da máquina *Wombat2* e ao menos uma chamada de função ou procedimento.  
 A implementação desses programas de teste será avaliada e, portanto, os seus códigos não devem ser compartilhados entre os grupos. Como mencionado na Seção 2, os arquivos de teste "*.a*" deverão ser incluídos no diretório "*tst*" do arquivo de entrega do trabalho, e devidamente explicados na documentação (o que se propõe fazer, qual o resultado esperado e outras informações que possam ser relevantes).
 
 ### Formato de Saída de Dados do Montador

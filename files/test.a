@@ -1,0 +1,5 @@
+loadi R3 negOne	; load -1 -> R3
+loadi R4 x ;foda-se
+
+x:	.data 2 8;
+negOne:	.data 3 -1; negOne: constant -1

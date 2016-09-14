@@ -20,7 +20,8 @@ Tabela_Opcodes opcode_table[MAX_OPCODE] = {
 };
 
 // Inicializa a tabela de simbolos
-void initialize_symbol_table() {
+void
+initialize_symbol_table() {
   int i;
   for (i = 0; i < MAX_TABLE; i++) {
     symbol_table[i].address = 0;
@@ -29,14 +30,18 @@ void initialize_symbol_table() {
 }
 
 // Retorna o endereco de um simbolo da tabela
-int get_symbol_address(char *name) {
+int
+get_symbol_address(char *name) {
+  if (strcmp(name, "IO") == 0) return 254; // Entrada e saída
+
   int i = 0;
   while (i < MAX_TABLE && strcmp(symbol_table[i].name, name) != 0) i++;
   return (i == MAX_TABLE) ? -1 : symbol_table[i].address;
 }
 
 // Insere um simbolo na tabela
-void insert_symbol(char *name, int address) {
+void
+insert_symbol(char *name, int address) {
   int i = 0;
   while (symbol_table[i].in_use) i++;
   strcpy(symbol_table[i].name, name);
@@ -46,7 +51,8 @@ void insert_symbol(char *name, int address) {
 
 // Retorna um parametro de alguma instrucao da tabela de instrucoes
 // Recebe como entrada o nome do opcode
-int get_opcode_param_by_name(char *name)
+int
+get_opcode_param_by_name(char *name)
 {
 	int i;
 	for(i = 0; i < MAX_OPCODE; i++){
@@ -57,7 +63,8 @@ int get_opcode_param_by_name(char *name)
 }
 
 // Retorna a proxima linha de um stream
-char *get_next_line(FILE *f) {
+char
+*get_next_line(FILE *f) {
 	int cont = 0, max = 32;
 	char *line = (char *)malloc(max*sizeof(char));
 	char c;
@@ -90,7 +97,8 @@ char *get_next_line(FILE *f) {
   Funções utilizadas para DEBUG
 */
 // Printa toda a tabela de símbolos
-void print_symbol_table() {
+void
+print_symbol_table() {
   int i = 0;
   for (i = 0; i < MAX_TABLE; i++) {
     if (symbol_table[i].in_use)
@@ -100,7 +108,9 @@ void print_symbol_table() {
   }
 }
 
-void print_binary(int x) {
+// Imprime 16 bits em binário
+void
+print_binary(int x) {
   printf("%04X\n", x);
   for (int i = 0; i < 16; i++) {
     printf("%d", (x & 0x8000) >> 15);
@@ -109,33 +119,68 @@ void print_binary(int x) {
   printf("\n");
 }
 
-int get_operands(int buffer) {
+// Retorna o registrador enumerado
+int
+get_reg(char* reg_name) {
+
+  if (strlen(reg_name) == 2) {
+    switch (reg_name[1]) { // Valor em char ASCII
+      case 48: // R0
+      case 49: // R1
+      case 50: // R2
+      case 51: // R3
+      case 52: // R4
+      case 53: // R5
+      case 54: // R6
+      case 55: // R7
+        return (int) reg_name[1] - 48;
+      default:
+        fprintf(stderr, "Registrador %s desconhecido!\n", reg_name);
+        exit(1);
+        break;
+    }
+  }
+  else {
+    fprintf(stderr, "Erro em retornar o valor do registrador %s\n", reg_name);
+    exit(1);
+  }
+  return -1;
+}
+
+int
+get_operands(char *token) {
   // buffer <<= 11;
-  switch (buffer) {
+  int choice, buffer;
+  choice = buffer = get_opcode_param_by_name(token);
+
+  buffer <<= 11; // Desloca para os bits da operação
+
+  printf("%s ", token); // DEBUG
+
+  switch (choice) {
     case 0: // "exit"
-      // 5 - 11
-      // op - un11
-      buffer = 0;
+      // 5 - 11 // op - un11
       break;
     case 1: // "loadi"
-      // 5 - 3 - 8
-      // op - reg - addr
+      // 5 - 3 - 8 // op - reg - addr
+      token = strtok(NULL, "\t ");
+      printf("%s ", token); // DEBUG
+      buffer += get_reg(token) << 8;
+      token = strtok(NULL, "\t ");
+      printf("%s %d\n", token, get_symbol_address(token)); // DEBUG
+      buffer += get_symbol_address(token);
       break;
     case 2: // "storei"
-      // 5 - 3 - 8
-      // op - reg - addr
+      // 5 - 3 - 8 // op - reg - addr
       break;
     case 3: // "add"
-      // 5 - 3 - 3 - 5
-      // op - reg - reg - un5
+      // 5 - 3 - 3 - 5 // op - reg - reg - un5
       break;
     case 4: // "subtract"
-      // 5 - 3 - 3 - 5
-      // op - reg - reg - un5
+      // 5 - 3 - 3 - 5 // op - reg - reg - un5
       break;
     case 5: // "multiply"
-      // 5 - 3 - 3 - 5
-      // op - reg - reg - un5
+      // 5 - 3 - 3 - 5 // op - reg - reg - un5
       break;
     case 6: // "divide"
       // 5 - 3 - 3 - 5
