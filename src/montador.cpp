@@ -4,6 +4,8 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <boost/algorithm/string.hpp>
+#include <vector>
 #include "symbol_table.hpp"
 #include "util.hpp"
 
@@ -13,32 +15,33 @@
 
 // Primeira passada do montador
 void
-pass_one(std::ifstream& file) {
+pass_one(std::ifstream& file, SymbolTable& table) {
 	using namespace std;
-	SymbolTable *table = new SymbolTable;  // inicialização geral
 
 	std::string line, symbol, literal, opcode;  // campos da instrução
 	int location_counter, length, value, type;  // variáveis diversas
 	location_counter = 0;                       // monta a primeira instrução em 0
 	int END_STATEMENT = -2;                     // sinaliza final da entrada
+	std::vector<string> fields;                 // tokens
 
 	while (getline(file, line)) { // obtenha uma linha de entrada
 		length = 0;           //
 		type = 0;             // # bytes na instrução
 
-		if (clearLine(&line))
+		if (clearLine(line))
 			continue;           // Se a linha não contiver instruções
-		std::cout << line << std::endl;
 
-		// if (line_is_not_comment(line)) { // de que tipo (formato) é a instrução
-		// 	symbol = check_for_symbol(line);	// essa linha é rotulada?
-		// 	if (symbol != null)	// se for, registre símbolo e valor
-		// 		enter_new_symbol(symbol, location_counter);
-		// 	literal = check_for_literal(line);	// a linha contém uma literal?
-		// 	if (literal != null)	// se contiver, entre a linha na tabela
-		// 		enter_new_literal(literal);
-		// 	// Agora determine o tipo de opcode. −1 significa opcode ilegal.
-		//   opcode = extract_opcode(line);	// localize mnemônico do opcode
+		boost::split( fields, line, // Separa a linha em tokens
+				boost::is_any_of( "\t " ), boost::token_compress_on);
+
+		if (fields[0].back() == ':') {
+			fields[0].pop_back();
+			table.insertSymbol(fields[0], location_counter);
+			fields[0].push_back(':');
+		}
+
+		// Agora determine o tipo de opcode. −1 significa opcode ilegal.
+		opcode = extract_opcode(fields);
 		// 	type = search_opcode_table(opcode);	 // ache formato, por exemplo OP REG1,REG2
 		// 	if (type < 0)	// se não for um opcode, é uma pseudoinstrução?
 		// 		type = search_pseudo_table(opcode);
@@ -58,7 +61,6 @@ pass_one(std::ifstream& file) {
 		// 	}
 	}
 }
-
 
 int
 main(int argc, char *argv[])
@@ -94,9 +96,9 @@ main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-
-
-	pass_one(fEntrada);
+	SymbolTable table;  // inicialização geral
+	pass_one(fEntrada, table);
+	table.printSymbols();
 	// pass_two(entrada, objeto); // Codificacao com enderecos descomplicados
 	//
 	fEntrada.close();

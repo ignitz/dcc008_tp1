@@ -10,13 +10,21 @@ Symbol::Symbol(std::string name, int value) {
   id++;
   this->name = name;
   this->value = value;
+  this->type = variable; // por default
+}
+
+Symbol::Symbol(std::string name, int value, TypeSymbol type) {
+  id++;
+  this->name = name;
+  this->value = value;
+  this->type = type;
 }
 
 /**************************
  * SymbolTable
  */
 SymbolTable::SymbolTable() {
-  // Tá tranquilo Entei
+  // Tá tudo bem Entei
 }
 
 int
@@ -47,6 +55,21 @@ bool
 SymbolTable::insertSymbol(std::string name, int value) {
   if (this->checkSymbol(name)) // Verifica se ja tem na tabela
     return false;
-  this->symbol.push_back(new Symbol(name, value));
+  if (name.front() == '_')
+    this->symbol.push_back(new Symbol(name, value, TypeSymbol::label));
+  else
+    this->symbol.push_back(new Symbol(name, 0));
   return true;
+}
+
+void SymbolTable::printSymbols() {
+  int size = this->symbol.size();
+  std::cout << "**************************" << std::endl;
+  std::cout << "Symbol Table:" << std::endl;
+  for (int i = 0; i < size; i++) {
+    std::cout << this->symbol.at(i)->name;
+    symbol.at(i)->name.size() < 7 ? std::cout << "\t\t" : std::cout << "\t";
+    std::cout << this->symbol.at(i)->value << std::endl;
+  }
+  std::cout << "**************************" << std::endl;
 }

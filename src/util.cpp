@@ -16,3 +16,20 @@ clearLine(std::string& line) {
       line.replace(line.find_last_of(" "), 1, "");
   return line.size() == 0 ? true : false;
 }
+
+void
+print(std::vector <std::string> & v)
+{
+  using namespace std;
+  for (size_t n = 0; n < v.size(); n++)
+    cout << "\"" << v[ n ] << "\"\n";
+  cout << endl;
+}
+
+std::string
+extract_opcode(std::vector<std::string> fields) {
+  if (fields[0].back() == ':')
+    return fields[1];
+  else
+    return fields[0];
+}
