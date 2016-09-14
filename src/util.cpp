@@ -1,7 +1,7 @@
 #include "util.hpp"
 
 bool // Remove comentários, "\t" e espaços na linha da string
-clearLine(std::string line) {
+clearLine(std::string& line) {
   using namespace std;
   if (line.find(";") != string::npos) // Retira comentários
     line.erase(line.find(";"), line.size() - line.find(";"));

@@ -26,8 +26,9 @@ pass_one(std::ifstream& file) {
 		length = 0;           //
 		type = 0;             // # bytes na instrução
 
-		if (clearLine(line))  // Se a linha não contiver instruções
-			continue;
+		if (clearLine(&line))
+			continue;           // Se a linha não contiver instruções
+		std::cout << line << std::endl;
 
 		// if (line_is_not_comment(line)) { // de que tipo (formato) é a instrução
 		// 	symbol = check_for_symbol(line);	// essa linha é rotulada?

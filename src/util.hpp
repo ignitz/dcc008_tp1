@@ -5,5 +5,5 @@
 #include <cstdio>
 #include <string>
 
-bool clearLine(std::string line);
+bool clearLine(std::string& line);
 #endif
