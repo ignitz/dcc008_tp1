@@ -22,7 +22,7 @@ public:
 class TableOpcode {
 private:
   std::vector<Opcode*> opcode;
-  
+
 public:
   /* Verifica se um vetor de strings contém um opcode no primeiro iostream
    * ou no segundo, caso o primeiro seja label

@@ -2,7 +2,7 @@
 
 // Primeira passada do montador
 void
-pass_one(std::ifstream& file, SymbolTable& table_symbol) {
+pass_one(std::ifstream& file, SymbolTable& table_symbol, bool bVerbose) {
 	using namespace std;
 
   TableOpcode table_opcode;                  // Tabela para Opcodes
@@ -15,6 +15,8 @@ pass_one(std::ifstream& file, SymbolTable& table_symbol) {
 		if (clearLine(line))
 			continue;           // Se a linha não contiver instruções
 
+		if (bVerbose) cout << "DEBUG: " << line << endl;
+
 		boost::split(fields, line, // Separa a linha em tokens
 				boost::is_any_of("\t "), boost::token_compress_on);
 
@@ -22,28 +24,36 @@ pass_one(std::ifstream& file, SymbolTable& table_symbol) {
       // Prefixo "_" eh label
       store_location = (fields[0].front() == '_') ? location_counter : 0;
 			fields[0].pop_back();
-			table_symbol.insertSymbol(fields[0], store_location);
+
+			if (table_symbol.checkSymbol(fields[0])) { // Verifica se label ja existe
+				std::cerr << "Redeclaração do símbolo: " << fields[0] << std::endl;
+				exit(EXIT_FAILURE);
+			}
+			else {
+				table_symbol.insertSymbol(fields[0], store_location, fields[2]);
+			}
+
 			fields[0].push_back(':');
-		}
+		} // end of while (getline(file, line))
 
 		strOpcode = table_opcode.extract_opcode(fields);
 
-    std::cout << line << std::endl;
 		if (table_opcode.isOpcode(strOpcode)) {
 			location_counter += 2;
+		}
+		else if (strOpcode.compare(".data")) {
+			location_counter += 0;
 		}
 		else {
 			std::cerr << "Opcode desconhecido: " << strOpcode << std::endl;
 			exit(EXIT_FAILURE);
 		}
-
 	}
-	// When you finish reading all the contents of your file,
-	// the state of the stream would be eof, thus all subsequent input operations will fail.
+
+	// modifica symbol
+	table_symbol.redefine(location_counter);
+
 	file.clear();
 	file.seekg(0, file.beg); // Posiciona no inicio do arquivo novamente
 
-
-	// sort_literal_table( );	// e ordenar a tabela de literais
-	// remove_redundant_literals( );	// e remover literais duplicadas
 }

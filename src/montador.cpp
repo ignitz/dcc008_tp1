@@ -8,28 +8,34 @@
 #include "symbol_table.hpp"
 
 #include "passOne.hpp"
+#include "passTwo.hpp"
 
 #define MSG_NOME_PROGRAMA		"Montador Wombat2\n"
-#define MSG_COPYRIGHT 			"(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <seuemailcabuloso@emai.com>\n"
-#define MSG_USO							"    Uso: montador NOME_ARQUIVO [NOME_ARQUIVO_SAIDA]\n"
+#define MSG_COPYRIGHT 			"(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <seuemailcabuloso@email.com>\n"
+#define MSG_USO							"    Uso: montador NOME_ARQUIVO [-o NOME_ARQUIVO_SAIDA] [-v]\n"
 
 int
 main(int argc, char *argv[])
 {
-	using namespace std;
-	bool bSaida = true;
-	std::string sEntrada = argv[1]; // Definicao do arquivo de entrada
-	std::string sSaida;
-
 	if (argc < 2){
 		std::cout << MSG_NOME_PROGRAMA << MSG_COPYRIGHT << MSG_USO;
 		return -1;
 	}
 
-	for(int i = 2; i < argc; i++){ // Verifica se nome de saida foi passado
-		if(string("-o") == string(argv[i])) {
+	using namespace std;
+	bool bSaida = true;
+	bool bVerbose = false;
+	std::string sEntrada = argv[1]; // Definicao do arquivo de entrada
+	std::string sSaida;
+
+
+	for(int i = 2; i < argc; i++){
+		if(string("-o") == string(argv[i])) { // Verifica se nome de saida foi passado
 			bSaida = false;
 			sSaida = argv[i+1];
+		}
+		if(string("-v") == string(argv[i])) { // modo Verbose
+			bVerbose = true;
 		}
 	}
 
@@ -46,12 +52,12 @@ main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	SymbolTable table;  // inicialização geral
-	pass_one(fEntrada, table);
-	table.printSymbols();
+	SymbolTable table_symbol;  // inicialização geral
+	pass_one(fEntrada, table_symbol, bVerbose);
+	if (bVerbose)
+		table_symbol.printSymbols();
 
-	// TODO
-	// pass_two(entrada, objeto); // Codificacao com enderecos descomplicados
+	pass_two(fEntrada, fObjeto, table_symbol, bVerbose);
 
 	fEntrada.close();
 	fObjeto.close();

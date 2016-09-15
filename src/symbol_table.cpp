@@ -11,6 +11,23 @@ Symbol::Symbol(std::string name, int value) {
   this->name = name;
   this->value = value;
   this->type = variable; // por default
+  this->num_bytes = 0;
+}
+
+Symbol::Symbol(std::string name, int value, int num_bytes) {
+  id++;
+  this->name = name;
+  this->value = value;
+  this->type = variable;
+  this->num_bytes = num_bytes;
+}
+
+Symbol::Symbol(std::string name, int value, std::string num_bytes) {
+  id++;
+  this->name = name;
+  this->value = value;
+  this->type = variable;
+  this->num_bytes = std::stoi (num_bytes);
 }
 
 Symbol::Symbol(std::string name, int value, TypeSymbol type) {
@@ -62,6 +79,33 @@ SymbolTable::insertSymbol(std::string name, int value) {
   return true;
 }
 
+bool // Especial para .data
+SymbolTable::insertSymbol(std::string name, int value, std::string num_bytes) {
+  if (this->checkSymbol(name))
+    return false;
+  if (name.front() == '_')
+    this->symbol.push_back(new Symbol(name, value, TypeSymbol::label));
+  else
+    this->symbol.push_back(new Symbol(name, 0, num_bytes));
+  return true;
+}
+
+bool
+SymbolTable::redefine(int location_counter) {
+  bool check = false;
+  int size = this->symbol.size();
+  for (int i = 0; i < size; i++) {
+    if (this->symbol.at(i)->name.front() != '_') {
+      this->symbol.at(i)->value = location_counter;
+      location_counter += this->symbol.at(i)->num_bytes;
+
+      check = true;
+    }
+  }
+  return check;
+}
+
+
 void
 SymbolTable::printSymbols() {
   int size = this->symbol.size();
@@ -70,7 +114,7 @@ SymbolTable::printSymbols() {
   for (int i = 0; i < size; i++) {
     std::cout << this->symbol.at(i)->name;
     symbol.at(i)->name.size() < 7 ? std::cout << "\t\t" : std::cout << "\t";
-    std::cout << this->symbol.at(i)->value << std::endl;
+    std::cout << std::hex << this->symbol.at(i)->value << std::endl;
   }
   std::cout << "**************************" << std::endl;
 }

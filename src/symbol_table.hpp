@@ -16,8 +16,11 @@ public:
   static int id;
   std::string name;
   int value;
+  int num_bytes;
   TypeSymbol type;
   Symbol(std::string name, int value);
+  Symbol(std::string name, int value, int num_bytes);
+  Symbol(std::string name, int value, std::string num_bytes);
   Symbol(std::string name, int value, TypeSymbol type);
 };
 
@@ -29,7 +32,14 @@ public:
   int getValue(std::string name);
   int getValue(int i);
   bool insertSymbol(std::string name, int value);
+  bool insertSymbol(std::string name, int value, std::string num_bytes);
   bool checkSymbol(std::string name);
+
+  /*
+   * Adiciona memórias com o tamanho em bytes
+   */
+  bool redefine(int location_counter);
+
   void printSymbols();
 };
 
