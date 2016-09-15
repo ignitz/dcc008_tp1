@@ -40,7 +40,7 @@ main(int argc, char *argv[])
 	}
 
 	if(bSaida)
-		sSaida = "exec.out"; // Nome padrão para geracao de executavel
+		sSaida = "tst/exec.mif"; // Nome padrão para geracao de executavel
 
 	ifstream fEntrada(sEntrada, ios::in);
 	fstream fObjeto(sSaida, ios::out | ios::in | ios::trunc);

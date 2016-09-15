@@ -49,6 +49,17 @@ TableOpcode::extract_opcode(std::vector<std::string> fields) {
   return this->isOpcode(fields[0]) ? fields[0] : "";
 }
 
+// int
+// TableOpcode::get_opcode_value(std::vector<std::string> fields) {
+//
+// }
+// int
+// TableOpcode::get_opcode_value(std::string opcode_name) {
+//   for (int i = 0; i < count; i++) {
+//
+//   }
+// }
+
 TableOpcode::TableOpcode() {
   // Insere todos os Opcodes em uma tabela
   this->opcode.push_back(new Opcode( EXIT ));

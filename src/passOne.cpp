@@ -4,12 +4,13 @@
 void
 pass_one(std::ifstream& file, SymbolTable& table_symbol, bool bVerbose) {
 	using namespace std;
+	if (bVerbose) cout << "DEBUG: Iniciando Pass_One" << endl;
 
   TableOpcode table_opcode;                  // Tabela para Opcodes
-	std::string line, symbol, literal, strOpcode;  // campos da instrução
+	string line, symbol, literal, strOpcode;  // campos da instrução
 	int location_counter, store_location;       // variáveis diversas
 	location_counter = 0;                       // monta a primeira instrução em 0
-	std::vector<string> fields;                 // tokens
+	vector<string> fields;                 // tokens
 
 	while (getline(file, line)) { // obtenha uma linha de entrada
 		if (clearLine(line))
@@ -26,7 +27,7 @@ pass_one(std::ifstream& file, SymbolTable& table_symbol, bool bVerbose) {
 			fields[0].pop_back();
 
 			if (table_symbol.checkSymbol(fields[0])) { // Verifica se label ja existe
-				std::cerr << "Redeclaração do símbolo: " << fields[0] << std::endl;
+				cerr << "Redeclaração do símbolo: " << fields[0] << endl;
 				exit(EXIT_FAILURE);
 			}
 			else {
@@ -45,7 +46,7 @@ pass_one(std::ifstream& file, SymbolTable& table_symbol, bool bVerbose) {
 			location_counter += 0;
 		}
 		else {
-			std::cerr << "Opcode desconhecido: " << strOpcode << std::endl;
+			cerr << "Opcode desconhecido: " << strOpcode << endl;
 			exit(EXIT_FAILURE);
 		}
 	}
