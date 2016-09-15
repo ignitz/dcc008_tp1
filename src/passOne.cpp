@@ -2,7 +2,7 @@
 
 // Primeira passada do montador
 void
-pass_one(std::ifstream& file, SymbolTable& table) {
+pass_one(std::ifstream& file, SymbolTable& table_symbol) {
 	using namespace std;
 
   TableOpcode table_opcode;                  // Tabela para Opcodes
@@ -22,17 +22,15 @@ pass_one(std::ifstream& file, SymbolTable& table) {
       // Prefixo "_" eh label
       store_location = (fields[0].front() == '_') ? location_counter : 0;
 			fields[0].pop_back();
-			table.insertSymbol(fields[0], store_location);
+			table_symbol.insertSymbol(fields[0], store_location);
 			fields[0].push_back(':');
 		}
-
 
 		strOpcode = table_opcode.extract_opcode(fields);
 
     std::cout << line << std::endl;
 		if (table_opcode.isOpcode(strOpcode)) {
 			location_counter += 2;
-			/* code */
 		}
 		else {
 			std::cerr << "Opcode desconhecido: " << strOpcode << std::endl;
@@ -44,6 +42,7 @@ pass_one(std::ifstream& file, SymbolTable& table) {
 	// the state of the stream would be eof, thus all subsequent input operations will fail.
 	file.clear();
 	file.seekg(0, file.beg); // Posiciona no inicio do arquivo novamente
+
 
 	// sort_literal_table( );	// e ordenar a tabela de literais
 	// remove_redundant_literals( );	// e remover literais duplicadas

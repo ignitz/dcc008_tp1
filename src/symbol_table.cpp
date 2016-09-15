@@ -62,7 +62,8 @@ SymbolTable::insertSymbol(std::string name, int value) {
   return true;
 }
 
-void SymbolTable::printSymbols() {
+void
+SymbolTable::printSymbols() {
   int size = this->symbol.size();
   std::cout << "**************************" << std::endl;
   std::cout << "Symbol Table:" << std::endl;

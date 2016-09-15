@@ -44,10 +44,8 @@ TableOpcode::isOpcode(std::string name) {
 
 std::string
 TableOpcode::extract_opcode(std::vector<std::string> fields) {
-  if (fields[0].back() == ':') { // Eh label?
-    // Pega o proximo token
-    return this->isOpcode(fields[1]) ? fields[1] : "";
-  }
+  if (fields[0].back() == ':') // Eh label?
+    return this->isOpcode(fields[1]) ? fields[1] : ""; // Pega o proximo token
   return this->isOpcode(fields[0]) ? fields[0] : "";
 }
 
@@ -80,5 +78,4 @@ TableOpcode::TableOpcode() {
   this->opcode.push_back(new Opcode( SGT ));
   this->opcode.push_back(new Opcode( SEQ ));
   this->opcode.push_back(new Opcode( JMPP ));
-  // };
 }

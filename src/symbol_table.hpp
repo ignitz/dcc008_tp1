@@ -8,8 +8,10 @@
 
 enum TypeSymbol {label, variable};
 
+/*
+ * Elemento contendo o Símbolo com seu ID, símbolo e posicao
+ */
 class Symbol {
-private:
 public:
   static int id;
   std::string name;
