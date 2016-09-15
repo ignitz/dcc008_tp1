@@ -198,10 +198,15 @@ clean:
 about:
 	@./$(BIN_NAME)
 
-# Execute About
-.PHONY: about
+# Execute
+.PHONY: run
 run:
 	@./$(BIN_NAME) ../files/W2-1.a
+
+# Execute Verbose
+.PHONY: v
+v:
+		@./$(BIN_NAME) ../files/W2-1.a -v
 
 # Main rule, checks the executable and symlinks to the output
 all: $(BIN_PATH)/$(BIN_NAME)

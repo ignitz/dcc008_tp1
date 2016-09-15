@@ -1,5 +1,5 @@
-#ifndef _PASS_ONE_
-#define _PASS_ONE_
+#ifndef _PASS_TWO_
+#define _PASS_TWO_
 #include <iostream>
 #include <cstdio>
 #include <iomanip>
@@ -10,5 +10,5 @@
 #include "table_opcodes.hpp"
 #include "util.hpp"
 
-void pass_one(std::ifstream& file, SymbolTable& table_symbol, bool bVerbose);
+void pass_two(std::ifstream& file, std::fstream& objeto, SymbolTable& table_symbol, bool bVerbose);
 #endif
