@@ -25,11 +25,3 @@ print(std::vector <std::string> & v)
     cout << "\"" << v[ n ] << "\"\n";
   cout << endl;
 }
-
-std::string
-extract_opcode(std::vector<std::string> fields) {
-  if (fields[0].back() == ':')
-    return fields[1];
-  else
-    return fields[0];
-}
