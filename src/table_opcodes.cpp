@@ -59,7 +59,7 @@ TableOpcode::get_opcode_value(std::string name) {
 }
 
 std::string
-TableOpcode::get_instruction(std::vector<std::string> fields) {
+TableOpcode::get_line_mif(std::vector<std::string> fields) {
   std::string r; // to return
   if (fields.size() == 0) return "";
 
@@ -86,16 +86,13 @@ TableOpcode::get_instruction(std::vector<std::string> fields) {
     }
   }
   else {
-    int binary = this->get_opcode_value(fields[0]) << 11;
+
+    int binary = this->get_instruction(fields);
 
     r += int_to_hex(this->location_counter);
     r += "        :  ";
     r += string_binary( (binary & 0xFF00) >> 8 ) + ";\n";
     this->location_counter++;
-    /*
-     * TODO
-     * Inserir os tipos e os bits adicionais
-     */
     r += int_to_hex(this->location_counter);
     r += "        :  ";
     r += string_binary( binary & 0x00FF ) + ";\n";
@@ -110,6 +107,141 @@ TableOpcode::get_instruction(std::vector<std::string> fields) {
 
   if (this->verbose) std::cout << r; // DEBUG
   return r;
+}
+
+int
+TableOpcode::get_register(std::string name) {
+  if (name.size() == 2) {
+    return (int) name[1];
+  }
+  else {
+    std::cerr << "Registrador esperado: " << name << std::endl;
+    exit(EXIT_FAILURE);
+  }
+  return 0;
+}
+
+int
+TableOpcode::get_instruction(std::vector<std::string> fields) {
+  int binary, choice, temp;
+  binary = choice = this->get_opcode_value(fields[0]);
+
+  temp = 0;
+  switch (choice) {
+    case 0: // EXIT      "exit",     0
+      binary = 0;
+      break;
+    case 1: // LOADI     "loadi",    1
+    case 2: // STOREI    "storei",   2
+      temp = this->get_register(fields[1]);
+      binary <<= 11;
+      binary |= (temp << 8) & (7 << 8);
+      if (isInteger(fields[2]))
+        binary |= (std::stoi(fields[2])) & 0xFF;
+      else
+        binary |= (this->get_symbol_value(fields[2])) & 0xFF;
+      break;
+    case 3: // ADD       "add",      3
+    case 4: // SUBTRACT  "subtract", 4
+    case 5: // MULTIPLY  "multiply", 5
+    case 6: // DIVIDE    "divide",   6
+    case 10: // MOVE      "move",     10
+    case 11: // LOAD      "load",     11
+    case 12: // STORE     "store",    12
+      binary <<= 11;
+      temp = this->get_register(fields[1]);
+      binary |= (temp << 8) & (7 << 8);
+      temp = this->get_register(fields[2]);
+      binary |= (temp << 5) & (7 << 5);
+      break;
+    case 7: // JUMP      "jump",     7
+      binary <<= 11;
+      if (isInteger(fields[1]))
+        binary |= (std::stoi(fields[1])) & 0xFF;
+      else
+        binary |= (this->get_symbol_value(fields[1])) & 0xFF;
+      break;
+    case 8: // JMPZ      "jmpz",     8
+    case 9: // JMPN      "jmpn",     9
+    case 26: // JMPP      "jmpp",     26
+      binary <<= 11;
+      temp = this->get_register(fields[1]);
+      binary |= (temp << 8) & (7 << 8);
+      if (isInteger(fields[2]))
+        binary |= (std::stoi(fields[2])) & 0xFF;
+      else
+        binary |= (this->get_symbol_value(fields[2])) & 0xFF;
+      break;
+    case 13: // LOADC     "loadc",    13
+      binary <<= 11;
+      temp = this->get_register(fields[1]);
+      binary |= (temp << 8) & (7 << 8);
+      if (isInteger(fields[2]))
+        binary |= (std::stoi(fields[2])) & 0xFF;
+      else {
+        std::cerr << "Constante esperado em " << fields[2] << std::endl;
+        exit(EXIT_FAILURE);
+      }
+      break;
+    case 14: // CLEAR     "clear",    14
+      binary <<= 11;
+      temp = this->get_register(fields[1]);
+      binary |= (temp << 8) & (7 << 8);
+      break;
+    case 15: // MOVESP    "moveSp",   15
+    case 21: // LOADRA    "loadRa",   21
+    case 22: // STORERA   "storeRa",  22
+      binary <<= 11;
+      if (isInteger(fields[1]))
+        binary |= (std::stoi(fields[1])) & 0xFF;
+      else {
+        std::cerr << "Constante esperado em " << fields[1] << std::endl;
+        exit(EXIT_FAILURE);
+      }
+      break;
+    case 16: // SLT       "slt",      16
+    case 24: // SGT       "sgt",      24
+    case 25: // SEQ       "seq",      25
+      binary <<= 11;
+      temp = this->get_register(fields[1]);
+      binary |= (temp << 8) & (7 << 8);
+      temp = this->get_register(fields[2]);
+      binary |= (temp << 5) & (7 << 5);
+      temp = this->get_register(fields[3]);
+      binary |= (temp << 2) & (7 << 2);
+      break;
+    case 17: // CALL      "call",     17
+      binary <<= 11;
+      binary |= (this->get_symbol_value(fields[1])) & 0xFF;
+      break;
+    case 18: // LOADSP    "loadSp",   18
+    case 19: // STORESP   "storeSp",  19
+      binary <<= 11;
+      temp = this->get_register(fields[1]);
+      binary |= (temp << 8) & (7 << 8);
+      if (isInteger(fields[2]))
+        binary |= (std::stoi(fields[2])) & 0xFF;
+      else {
+        std::cerr << "Constante esperado em " << fields[1] << std::endl;
+        exit(EXIT_FAILURE);
+      }
+      break;
+    case 20: // RET       "ret",      20
+      binary <<= 11;
+      break;
+    case 23: // ADDI      "addi",     23
+      binary <<= 11;
+      temp = this->get_register(fields[1]);
+      binary |= (temp << 8) & (7 << 8);
+      if (isInteger(fields[2]))
+        binary |= (std::stoi(fields[2])) & 0xFF;
+      else {
+        std::cerr << "Constante esperado em " << fields[1] << std::endl;
+        exit(EXIT_FAILURE);
+      }
+      break;
+  }
+  return binary;
 }
 
 TableOpcode::TableOpcode() {
@@ -142,31 +274,3 @@ TableOpcode::TableOpcode() {
   this->opcode.push_back(new Opcode( SEQ ));
   this->opcode.push_back(new Opcode( JMPP ));
 }
-
-// #define EXIT      "exit",     0
-// #define LOADI     "loadi",    1
-// #define STOREI    "storei",   2
-// #define ADD       "add",      3
-// #define SUBTRACT  "subtract", 4
-// #define MULTIPLY  "multiply", 5
-// #define DIVIDE    "divide",   6
-// #define JUMP      "jump",     7
-// #define JMPZ      "jmpz",     8
-// #define JMPN      "jmpn",     9
-// #define MOVE      "move",     10
-// #define LOAD      "load",     11
-// #define STORE     "store",    12
-// #define LOADC     "loadc",    13
-// #define CLEAR     "clear",    14
-// #define MOVESP    "moveSp",   15
-// #define SLT       "slt",      16
-// #define CALL      "call",     17
-// #define LOADSP    "loadSp",   18
-// #define STORESP   "storeSp",  19
-// #define RET       "ret",      20
-// #define LOADRA    "loadRa",   21
-// #define STORERA   "storeRa",  22
-// #define ADDI      "addi",     23
-// #define SGT       "sgt",      24
-// #define SEQ       "seq",      25
-// #define JMPP      "jmpp",     26

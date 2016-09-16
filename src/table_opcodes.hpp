@@ -36,7 +36,10 @@ public:
 
   int get_opcode_value( std::string );
   // Faz o trabalho todo
-  std::string get_instruction( std::vector<std::string> );
+  std::string get_line_mif( std::vector<std::string> );
+  int get_instruction( std::vector<std::string> );
+  int get_register( std::string );
+
   TableOpcode();
 };
 

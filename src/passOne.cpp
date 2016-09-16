@@ -53,6 +53,8 @@ pass_one(std::ifstream& file, TableOpcode& table) {
 	// modifica symbol
 	table.redefine(table.location_counter);
 
+	table.insertSymbol("IO", 254); // Entrada e saida
+
 	file.clear();
 	file.seekg(0, file.beg); // Posiciona no inicio do arquivo novamente
 

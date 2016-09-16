@@ -77,7 +77,7 @@ SymbolTable::insertSymbol(std::string name, int value) {
   if (name.front() == '_')
     this->symbol.push_back(new Symbol(name, value, TypeSymbol::label));
   else
-    this->symbol.push_back(new Symbol(name, 0));
+    this->symbol.push_back(new Symbol(name, value));
   return true;
 }
 
