@@ -10,5 +10,5 @@
 #include "table_opcodes.hpp"
 #include "util.hpp"
 
-void pass_two(std::ifstream& file, std::fstream& objeto, SymbolTable& table_symbol, bool bVerbose);
+void pass_two( std::ifstream& , std::fstream& , TableOpcode& );
 #endif

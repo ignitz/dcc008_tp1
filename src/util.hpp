@@ -8,8 +8,12 @@
 #include <cstdio>
 #include <string>
 #include <vector>
+#include <iomanip>
+#include <sstream>
 
-bool clearLine(std::string& line); // Remove comentários, "\t" e espaços na linha da string
-void print( std::vector <std::string> & v ); // Imprime o vetor de strings
+bool clearLine( std::string& ); // Remove comentários, "\t" e espaços na linha da string
+std::string string_binary( int );
+void print( std::vector <std::string> & ); // Imprime o vetor de strings
+std::string int_to_hex( int ); // Convert pra HEX
 
 #endif

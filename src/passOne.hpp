@@ -10,5 +10,5 @@
 #include "table_opcodes.hpp"
 #include "util.hpp"
 
-void pass_one(std::ifstream& file, SymbolTable& table_symbol, bool bVerbose);
+void pass_one( std::ifstream& , TableOpcode& );
 #endif

@@ -18,27 +18,29 @@ public:
   int value;
   int num_bytes;
   TypeSymbol type;
-  Symbol(std::string name, int value);
-  Symbol(std::string name, int value, int num_bytes);
-  Symbol(std::string name, int value, std::string num_bytes);
-  Symbol(std::string name, int value, TypeSymbol type);
+  Symbol( std::string , int );
+  Symbol( std::string , int , int );
+  Symbol( std::string , int , std::string );
+  Symbol( std::string , int , TypeSymbol );
 };
 
 class SymbolTable {
 private:
   std::deque<Symbol*> symbol;
 public:
+  bool verbose;
+  int location_counter;
   SymbolTable();
-  int getValue(std::string name);
-  int getValue(int i);
-  bool insertSymbol(std::string name, int value);
-  bool insertSymbol(std::string name, int value, std::string num_bytes);
-  bool checkSymbol(std::string name);
+  int get_symbol_value( std::string );
+  int get_symbol_value( int );
+  bool insertSymbol( std::string , int );
+  bool insertSymbol( std::string , int , std::string );
+  bool checkSymbol( std::string );
 
   /*
    * Adiciona memórias com o tamanho em bytes
    */
-  bool redefine(int location_counter);
+  bool redefine( int );
 
   void printSymbols();
 };

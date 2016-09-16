@@ -52,15 +52,13 @@ main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	SymbolTable table_symbol;  // inicialização geral
-	pass_one(fEntrada, table_symbol, bVerbose);
-	if (bVerbose)
-		table_symbol.printSymbols();
-
-	pass_two(fEntrada, fObjeto, table_symbol, bVerbose);
+	TableOpcode table;  // inicialização geral
+	table.verbose = bVerbose;
+	pass_one(fEntrada, table);
+	pass_two(fEntrada, fObjeto, table);
 
 	fEntrada.close();
 	fObjeto.close();
-	//
+
 	return 0;
 }

@@ -17,6 +17,27 @@ clearLine(std::string& line) {
   return line.size() == 0 ? true : false; // Retorna true se a linha ficou vazia
 }
 
+
+// Imprime 8 bits em binário
+std::string
+string_binary(int x) {
+  std::string r;
+
+  for (int i = 0; i < 8; i++) {
+    r += std::to_string((x & 0x80) >> 7);
+    x <<= 1;
+  }
+  return r;
+}
+
+std::string
+int_to_hex( int i ) {
+  std::stringstream stream;
+  stream << std::setfill ('0') << std::setw(2)
+         << std::hex << i;
+  return stream.str();
+}
+
 void
 print(std::vector <std::string> & v)
 {

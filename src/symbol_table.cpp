@@ -42,10 +42,11 @@ Symbol::Symbol(std::string name, int value, TypeSymbol type) {
  */
 SymbolTable::SymbolTable() {
   // Tá tudo bem Entei
+  this->location_counter = 0;
 }
 
 int
-SymbolTable::getValue(int i) {
+SymbolTable::get_symbol_value(int i) {
   if (i >= 1 && i <= (int) this->symbol.size())
     return this->symbol.at(i-1)->value;
   else
@@ -53,8 +54,9 @@ SymbolTable::getValue(int i) {
 }
 
 int
-SymbolTable::getValue(std::string name) {
+SymbolTable::get_symbol_value(std::string name) {
   int size = this->symbol.size();
+  if (name.back() == ':') name.pop_back();
   for (int i = 0; i < size; i++)
     if (this->symbol.at(i)->name.compare(name) == 0) return this->symbol.at(i)->value;
   return -1;
