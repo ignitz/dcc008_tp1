@@ -32,6 +32,7 @@ pass_two(std::ifstream& file, std::fstream& objeto, TableOpcode& table) {
           boost::is_any_of("\t "), boost::token_compress_on);
 
     output += table.get_line_mif(fields);
+    transform(output.begin(), output.end(), output.begin(), ::toupper);
   }
 
   if (bVerbose) table.printSymbols();
