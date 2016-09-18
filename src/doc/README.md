@@ -5,17 +5,34 @@
 
 ### 1. Introdução
 
-Eiiitaaa Mainhaaa!! Esse Lorem ipsum é só na sacanageeem!! E que abundância meu irmão viuu!! Assim você vai matar o papai. Só digo uma coisa, Domingo ela não vai! Danadaa!! Vem minha odalisca, agora faz essa cobra coral subir!!! Pau que nasce torto, Nunca se endireita. Tchannn!! Tchannn!! Tu du du pááá! Eu gostchu muitchu, heinn! danadinha! Mainhaa! Agora use meu lorem ipsum ordinária!!! Olha o quibeee! rema, rema, ordinária!.
+O trabalho prático consiste em criar um montador para o Wombat2, uma arquitetura simplificado.  
+Foi utilizado a linguagem *C++* para criar o montador e testado no **Eufrates** (computadores do CRC).
+
+#### Tópicos que preciso destacar
+
+- Verificar se tem instalado os pacotes C++11 pois no Ubuntu 15.10 não tem.
+- C++ foi essencial para facilitar na manutenção no próximo TP.
+-
+
+### 2. Implementação
+
+Foi escolhido C++ para facilitar implementação utilizando sobrecargas e classes.
+
+##### Classes
+- **TableSymbol**  
+  Utilizado pra criar a tabela de símbolos.
+- **Symbol**
+- **TableOpcode**  
+  Utilizado pra criar a tabela de Opcodes. A Classe estende de TableSymbol.
+- **Opcode**
+smakc=+
 
 
-### Dorico
-Oh, thank you, thank you. Okay now, we run some industrial strength electrical cable from the top of the clocktower down to spreading it over the street between two lamp posts. Meanwhile, we out-fitted the vehicle with this big pole and hook which runs directly into the flux-capacitor. At the calculated moment, you start off from down the street driving toward the cable execrating to eighty-eight miles per hour. According to the flyer, at !0:04 pm lightning will strike the clocktower sending one point twenty-one gigawatts into the flux-capacitor, sending you back to 1985. Alright now, watch this. You wind up the car and release it, I'll simulate the lightening. Ready, set, release. Huhh. Shit. We all make mistakes in life, children Well maybe you are and you just don't know it yet. Hello, hello, anybody home? Think, McFly, think. I gotta have time to get them re-typed. Do you realize what would happen if I hand in my reports in your handwriting. I'll get fired. You wouldn't want that to happen would you? Would you?
-
-### Diroco
+### Testes
 
 Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass.
 
-### Doreco
+### Dorico
 
 Mussum Ipsum, cacilds vidis litro abertis. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum. Leite de capivaris, leite de mula manquis. Si num tem leite então bota uma pinga aí cumpadi! Copo furadis é disculpa de bebadis, arcu quam euismod magna.
 
@@ -26,3 +43,5 @@ Diuretics paradis num copo é motivis de denguis. Paisis, filhis, espiritis sant
 Bulbasaur Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ivysaur Lorem ipsum dolor sit amet, consectetur adipiscing elit. Venusaur Lorem
 
 ### Referências
+
+- [cplusplus Reference](http://www.cplusplus.com/reference/)
