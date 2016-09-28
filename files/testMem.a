@@ -1,0 +1,4 @@
+negOne:	.data 1 -2	
+sign:	.data 2 -2
+one:	.data 3 -2
+two:	.data 3 -2

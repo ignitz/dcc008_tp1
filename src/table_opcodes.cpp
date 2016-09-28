@@ -59,6 +59,40 @@ TableOpcode::get_opcode_value(std::string name) {
 }
 
 std::string
+TableOpcode::get_data(std::vector<std::string> fields) {
+  std::string r;
+  /*
+   * Verificar se vai tratar todos os casos contido em dataInstrs.html
+   * TODO
+   */
+  //    .data 5 0             ; fills 5 cells with 0's
+  //    .data 5 [0,0,0,0,0]   ; fills 5 cells with 0's
+  //    .data 5 1 [0,0,0,0,0] ; fills 5 cells with 0's
+  //    .data 5 5 [0]         ; fills 5 cells with 0's
+  //    .data 5 -1            ; fills 5 cells with all 1 bits (the 2's complement representation of -1)
+  //    .data 5 [1,2,3,4,5]   ; fills 5 cells with the five values 1, 2, 3, 4, 5
+  //    .data 6 2 [4 2 7]     ; fills 6 cells with the three values 4, 2, 7, each using two cells.
+  //    .data 5 1 [4 2 7]     ; fills 5 cells with the values 4, 2, 7, 4, 2
+  //    .data 128 [-1]        ; fills 128 cells each with the value -1
+  //    .data 3 1 [1 2 3 4 5] ; fills 3 cells with the values 1, 2, 3
+  if (this->location_counter == this->get_symbol_value(fields[0])) {
+    int many = std::stoi(fields[2]);
+    for (int i = 0; i < many; i++) {
+      r += int_to_hex(this->location_counter);
+      r += "        :  ";
+      r += string_binary(std::stoi(fields[3])) + ";\n";
+      this->location_counter++;
+    }
+  }
+  else{
+    std::cerr << "Erro no endereço do símbolo "
+      << fields[0] << std::endl;
+    exit(EXIT_FAILURE);
+  }
+  return r;
+}
+
+std::string
 TableOpcode::get_line_mif(std::vector<std::string> fields) {
   std::string r; // to return
   if (fields.size() == 0) return "";
@@ -69,20 +103,7 @@ TableOpcode::get_line_mif(std::vector<std::string> fields) {
   if (fields[0].back() == ':') {
     // do .data
     if (fields.size() >= 4 && fields[1].compare(".data") == 0) {
-      if (this->location_counter == this->get_symbol_value(fields[0])) {
-        int many = std::stoi(fields[2]);
-        for (int i = 0; i < many; i++) {
-          r += int_to_hex(this->location_counter);
-          r += "        :  ";
-          r += string_binary(std::stoi(fields[3])) + ";\n";
-          this->location_counter++;
-        }
-      }
-      else{
-        std::cerr << "Erro no endereço do símbolo "
-          << fields[0] << std::endl;
-        exit(EXIT_FAILURE);
-      }
+      r += this->get_data(fields);
     }
   }
   else {

@@ -1,0 +1,16 @@
+DEPTH = 256;
+WIDTH = 8;
+ADDRESS_RADIX = HEX;
+DATA_RADIX = BIN;
+CONTENT
+BEGIN
+
+00        :  11111110;              -- negOne: .data 1 -2 | negOne: .data 1 -2
+01        :  11111111;              -- sign: .data 2 -2 | sign: .data 2 -2
+02        :  11111110;              -- 
+[03..04]:  11111111;              -- 
+05        :  11111110;              -- 
+[06..07]:  11111111;              -- 
+08        :  11111110;              -- 
+[09..FF]:  00000000;              -- 
+END;

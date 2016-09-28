@@ -34,6 +34,9 @@ public:
   // Verifica se uma string é um opcode
   bool isOpcode( std::string );
 
+  // Faz o trabalho do .data
+  std::string get_data( std::vector<std::string> );
+
   int get_opcode_value( std::string );
   // Faz o trabalho todo
   std::string get_line_mif( std::vector<std::string> );
