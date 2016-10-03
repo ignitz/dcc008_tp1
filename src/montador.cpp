@@ -11,7 +11,7 @@
 #include "passTwo.hpp"
 
 #define MSG_NOME_PROGRAMA		"Montador Wombat2\n"
-#define MSG_COPYRIGHT 			"(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <seuemailcabuloso@email.com>\n"
+#define MSG_COPYRIGHT 			"(C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>\n         Lucas Machado <lucaspedro.machado@gmail.com>\n"
 #define MSG_USO							"    Uso: montador NOME_ARQUIVO [-o NOME_ARQUIVO_SAIDA] [-v]\n"
 
 int
