@@ -51,6 +51,24 @@ A `main` se encontra no arquivo `montador.cpp` onde abre o arquivo de entrada e 
 
 Na segunda passada `pass_two` é onde o arquivo de saída é gerado. Os mnemônico são convertidos diretamente em strings binários pela `class TableOpcode` implementada no arquivo `table_opcodes` e extendida da classe `Symbol` (para utilizar a tabela de símbolo gerada na primeira passada).
 
+A implementação da pseudo-instrução "`.data`" foi convencionado na seguinte forma.
+
+`[VAR_NAME]: .data [TAM] [VALUE]`
+
+- VAR_NAME: Nome da variável.
+- TAM: Tamanho de bytes usados
+- VALUE: Valor 8 bits inicial.
+
+Caso o TAM seja maior ou igual a 2, o sinal de complemento de dois é extendido com a quantidade de blocos.
+
+**Exemplo:**
+- TAM = 2 com negativo:  
+-1 --> 11111111 11111111
+- TAM = 3 com negativo:  
+-2 --> 11111111 11111111 11111110
+- TAM = 2 com não-negativo:  
+2 --> 00000000 00000010
+
 Escolhemos o formato de memória `.mif` para facilitar correção e leitura em bits.
 
 [Livro1]: https://www.amazon.com.br/dp/8581435394/ref=asc_df_85814353944554189?smid=A1ZZFT5FULY4LN&tag=goog0ef-20&linkCode=asn&creative=380341&creativeASIN=8581435394
