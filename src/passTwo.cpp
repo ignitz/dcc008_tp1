@@ -38,6 +38,7 @@ pass_two(std::ifstream& file, std::fstream& objeto, TableOpcode& table) {
   if (bVerbose) table.printSymbols();
 
   // Finaliza gravando em arquivo
+  output += std::string("[" + int_to_hex(table.location_counter++) + "..FF]:  00000000;\n");
   output += END_MIF;
   objeto << output;
 } // end passtwo
