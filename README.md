@@ -11,5 +11,5 @@ O trabalho prático consiste em criar um montador para o Wombat2, uma arquitetur
 - **src**: Código fonte do montador em C++.
 
 > Yuri Niitsuma   <ignitzhjfk@gmail.com>  
-> Lucas Machado   <lucaspedro.machado@gmail.com>
+> Lucas Machado   <lucaspedro.machado@gmail.com>  
 > Nathalia Campos <nathalia.campos.braga@gmail.com>
