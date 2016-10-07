@@ -103,6 +103,8 @@ Que só indicam os blocos com bytes repetidos. Pelos testes concluímos que o mo
 
 Os dois programas podem ser encontrados no diretório **tst** incluindo as RAMs extraídas do CPUSim.
 
+> Isso é tudo corretor. Segue [Bizarre Love Triangle](https://www.youtube.com/watch?v=BobgTmOJg7M) cantada pela Scarlett Johansson xD.
+
 ### Referências
 
 - [cplusplus Reference C++11](http://www.cplusplus.com/reference/)
