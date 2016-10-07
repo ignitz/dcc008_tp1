@@ -204,6 +204,7 @@ run:
 	@./$(BIN_NAME) ../files/W2-1.a
 	@./$(BIN_NAME) tst/all.a -o tst/all.mif
 	@./$(BIN_NAME) tst/media.a -o tst/media.mif
+	@./$(BIN_NAME) tst/pa.a -o tst/pa.mif
 
 # Execute Verbose
 .PHONY: v

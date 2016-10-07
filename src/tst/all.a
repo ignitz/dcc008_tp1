@@ -1,3 +1,4 @@
+; Programa sem proposito para verificar se contem todas as instrucoes.
 
         loadi R0 254
         storei R0 254

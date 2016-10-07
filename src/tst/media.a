@@ -1,3 +1,5 @@
+; Programa que calcula a media de dois numeros como entrada.
+; int * int -> int
 
           loadi R0 254
           loadi R1 254

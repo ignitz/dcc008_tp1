@@ -1,18 +1,17 @@
 # Trabalho Prático 1 - Montador
 
 > Lucas Machado  
-> Yuri Niitsuma
+> Yuri Niitsuma  
+> Nathalia Campos
 
 ### Introdução
 
 O trabalho prático consiste em criar um montador para o Wombat2, uma arquitetura simplificado.  
-Foi utilizado a linguagem *C++* para criar o montador e testado no **Eufrates** (computadores do CRC).
+Foi utilizado a linguagem *C++* para criar o montador e testado no **Eufrates** (computador do CRC).
 
 <!--
-
 - Verificar se tem instalado os pacotes C++11 pois no Ubuntu 15.10 não tem.
-- C++ foi essencial para facilitar na manutenção no próximo TP.
-- -->
+-->
 
 ### Makefile
 
@@ -27,10 +26,11 @@ Utilizei o [GenericMakefile](https://github.com/mbcrawfo/GenericMakefile) como t
 Montador Wombat2
 (C) 2016 Yuri Niitsuma <ignitzhjfk@gmail.com>
          Lucas Machado <lucaspedro.machado@gmail.com>
+         Nathalia Campos <nathalia.campos.braga@gmail.com>
     Uso: montador NOME_ARQUIVO [-o NOME_ARQUIVO_SAIDA] [-v]
 ```
 
-- **make run**: Executa o montador normalmente nos arquivos de teste *max.a*, *min.a* e *media.a*.
+- **make run**: Executa o montador normalmente nos arquivos de teste *all.a*, *media.a* e *pa.a*.
 
 - **make v**: Executa em modo verbose utilizando o arquivo padrão da especificação "W2-1.a", imprime todo o processo da montagem incluindo a tabela de símbolos.
 
@@ -41,7 +41,7 @@ O montador pode ser executado diretamente no formato.
 
 Se não for passado o nome do arquivo de saída (caso deseje executá-lo diretamente pela linha de comando) ele será gravado no arquivo padrão "*exec.mif*" dentro da pasta "*tst*".
 
-Na compilação é necessária o uso do **c++11**. //TODO
+Na compilação é necessária o uso do **c++11** pois utilizo uma funções para separar os tokens.
 
 ### Implementação
 
@@ -77,40 +77,31 @@ Escolhemos o formato de memória `.mif` para facilitar correção e leitura em b
 
 Para testar o montador, foram escritos três programas:
 - "media.a": lê dois inteiros na entrada padrão e e retorna o valor medio entre eles;
-- "min.a": lê dois inteiros da entrada padrão e retorna o maior deles;
-- "max.a": lê dois inteiros da entrada padrão e retorna o menor deles.
+- "all.a": Ela não faz nada de específico. Contém todas as instruções só para verificar se o binário do Montador está correto com o binário do CPUSim.
+- "pa.a": Função pra calcular uma PA de **n** termos tal que **n** é entrada de usuário.  
+ SOMA = 1 + 2 + ... + n
 
-Todos eles fazem chamada de procedimento e ao todo, testam 19 instruções. São elas:
+Retirando os comentários do all_cpusim.mif e comparando utilizando `diff` para encontrar as diferenças recebemos o resultado.
 
-- 00 exit      ✔
-- 01 loadi     ✔
-- 02 storei    ✔
-- 03 add       ✔
-- 04 subtract  ✔
-- 05 multiply  
-- 06 divide    ✔
-- 07 jump      ✔
-- 08 jmpz      ✔
-- 09 jmpn      ✔
-- 10 move      ✔
-- 11 load      
-- 12 store     
-- 13 loadc     ✔
-- 14 clear     
-- 15 moveSP    ✔
-- 16 slt       ✔
-- 17 call      ✔
-- 18 loadSP    ✔
-- 19 storeSP   ✔
-- 20 ret       ✔
-- 21 loadRA    
-- 22 storeRA   
-- 23 addi      
-- 24 sgt       ✔
-- 25 seq       ✔
-- 26 jmpp      ✔
+```
+diff tst/all.mif tst/all_cpusim.mif
+13,15c13
+< 05        :  00100000;
+< 06        :  00100000;
+< 07        :  00100000;
+---
+> [05..07]:  00100000;
+60,62c58
+< 34        :  00000000;
+< 35        :  00000000;
+< [36..FF]:  00000000;
+---
+> [34..FF]:  00000000;
+```
 
-Os três programas podem ser encontrados no diretório **tst**.
+Que só indicam os blocos com bytes repetidos. Pelos testes concluímos que o montador funciona corretamente (excluíndo o .data).
+
+Os dois programas podem ser encontrados no diretório **tst** incluindo as RAMs extraídas do CPUSim.
 
 ### Referências
 

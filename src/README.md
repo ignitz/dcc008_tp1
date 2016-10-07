@@ -18,7 +18,7 @@ $ make debug
 
 #### Executar
 
-Executar abrindo o arquivo W2-1.a
+Executar abrindo o arquivo all.a, media.a e pa.a
 
 ```
 $ make run
@@ -38,6 +38,9 @@ $ ./montador -o [arquivo_saida.mif]
 
 
 #### Executar em verbose
+
+Executar abrindo o arquivo W2-1.a
+
 ```
 $ make v
 ```
