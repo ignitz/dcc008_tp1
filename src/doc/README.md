@@ -75,7 +75,41 @@ Escolhemos o formato de memória `.mif` para facilitar correção e leitura em b
 
 ### Testes
 
-Aí é com você Lucas.
+Para testar o montador, foram escritos três programas:
+- "media.a": lê dois inteiros na entrada padrão e e retorna o valor medio entre eles;
+- "min.a": lê dois inteiros da entrada padrão e retorna o maior deles;
+- "max.a": lê dois inteiros da entrada padrão e retorna o menor deles.
+
+Todos eles fazem chamada de procedimento e ao todo, testam 19 instruções. São elas:
+00 exit      ✔
+01 loadi     ✔
+02 storei    ✔
+03 add       ✔
+04 subtract  ✔
+05 multiply  
+06 divide    ✔
+07 jump      ✔
+08 jmpz      ✔
+09 jmpn      ✔
+10 move      ✔
+11 load      
+12 store     
+13 loadc     ✔
+14 clear     
+15 moveSP    ✔
+16 slt       ✔
+17 call      ✔
+18 loadSP    ✔
+19 storeSP   ✔
+20 ret       ✔
+21 loadRA    
+22 storeRA   
+23 addi      
+24 sgt       ✔
+25 seq       ✔
+26 jmpp      ✔
+
+Os três programas podem ser encontrados no diretório tst.
 
 ### Conclusão
 

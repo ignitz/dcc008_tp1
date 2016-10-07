@@ -1,0 +1,25 @@
+
+          loadi R0 254
+          loadi R1 254
+          storeSP R0 -2
+          storeSP R1 -4
+          moveSP -4
+          call _MAX
+          loadSP R0 0
+          moveSP 2
+          storei R0 254
+          exit
+_MAX:     loadSP R0 0
+          loadSP R1 2
+          moveSP 4
+          move R3 R1
+          subtract R3 R2
+          jmpn R3 _MENOR
+          jmpz R3 _IGUAL
+          storeSP R1 -2
+          jump _EXIT
+_MENOR:   storeSP R2 -2
+          jump _EXIT
+_IGUAL:   storeSP R1 -2
+_EXIT:    moveSP -2
+          ret

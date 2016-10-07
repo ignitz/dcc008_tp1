@@ -206,7 +206,7 @@ run:
 # Execute Verbose
 .PHONY: v
 v:
-		@./$(BIN_NAME) ../files/W2-1.a -v
+	@./$(BIN_NAME) ../files/W2-1.a -v
 
 # Main rule, checks the executable and symlinks to the output
 all: $(BIN_PATH)/$(BIN_NAME)
