@@ -202,6 +202,9 @@ about:
 .PHONY: run
 run:
 	@./$(BIN_NAME) ../files/W2-1.a
+	@./$(BIN_NAME) tst/max.a -o tst/max.mif
+	@./$(BIN_NAME) tst/min.a -o tst/min.mif
+	@./$(BIN_NAME) tst/max.a -o tst/media.mif
 
 # Execute Verbose
 .PHONY: v

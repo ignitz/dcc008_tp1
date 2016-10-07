@@ -3,7 +3,7 @@
 > Lucas Machado  
 > Yuri Niitsuma
 
-### 1. Introdução
+### Introdução
 
 O trabalho prático consiste em criar um montador para o Wombat2, uma arquitetura simplificado.  
 Foi utilizado a linguagem *C++* para criar o montador e testado no **Eufrates** (computadores do CRC).
@@ -14,7 +14,7 @@ Foi utilizado a linguagem *C++* para criar o montador e testado no **Eufrates** 
 - C++ foi essencial para facilitar na manutenção no próximo TP.
 - -->
 
-### 2. Makefile
+### Makefile
 
 Utilizei o [GenericMakefile](https://github.com/mbcrawfo/GenericMakefile) como template com os seguintes comandos.
 
@@ -30,9 +30,9 @@ Montador Wombat2
     Uso: montador NOME_ARQUIVO [-o NOME_ARQUIVO_SAIDA] [-v]
 ```
 
-- **make run**: Executa o montador normalmente utilizando o arquivo padrão da especificação "W2-1.a".
+- **make run**: Executa o montador normalmente nos arquivos de teste *max.a*, *min.a* e *media.a*.
 
-- **make v**: Executa o "`make run`" em modo verbose, imprime todo o processo da montagem incluindo a tabela de símbolos.
+- **make v**: Executa em modo verbose utilizando o arquivo padrão da especificação "W2-1.a", imprime todo o processo da montagem incluindo a tabela de símbolos.
 
 #### Executar diretamente
 
@@ -43,7 +43,7 @@ Se não for passado o nome do arquivo de saída (caso deseje executá-lo diretam
 
 Na compilação é necessária o uso do **c++11**. //TODO
 
-### 3. Implementação
+### Implementação
 
 A implementação do montador foi utilizado o processo de dois passos especificado no livro [Organização Estruturada de Computadores][Livro1] do Andrew S. Tanenbaum.
 
@@ -81,39 +81,36 @@ Para testar o montador, foram escritos três programas:
 - "max.a": lê dois inteiros da entrada padrão e retorna o menor deles.
 
 Todos eles fazem chamada de procedimento e ao todo, testam 19 instruções. São elas:
-00 exit      ✔
-01 loadi     ✔
-02 storei    ✔
-03 add       ✔
-04 subtract  ✔
-05 multiply  
-06 divide    ✔
-07 jump      ✔
-08 jmpz      ✔
-09 jmpn      ✔
-10 move      ✔
-11 load      
-12 store     
-13 loadc     ✔
-14 clear     
-15 moveSP    ✔
-16 slt       ✔
-17 call      ✔
-18 loadSP    ✔
-19 storeSP   ✔
-20 ret       ✔
-21 loadRA    
-22 storeRA   
-23 addi      
-24 sgt       ✔
-25 seq       ✔
-26 jmpp      ✔
 
-Os três programas podem ser encontrados no diretório tst.
+- 00 exit      ✔
+- 01 loadi     ✔
+- 02 storei    ✔
+- 03 add       ✔
+- 04 subtract  ✔
+- 05 multiply  
+- 06 divide    ✔
+- 07 jump      ✔
+- 08 jmpz      ✔
+- 09 jmpn      ✔
+- 10 move      ✔
+- 11 load      
+- 12 store     
+- 13 loadc     ✔
+- 14 clear     
+- 15 moveSP    ✔
+- 16 slt       ✔
+- 17 call      ✔
+- 18 loadSP    ✔
+- 19 storeSP   ✔
+- 20 ret       ✔
+- 21 loadRA    
+- 22 storeRA   
+- 23 addi      
+- 24 sgt       ✔
+- 25 seq       ✔
+- 26 jmpp      ✔
 
-### Conclusão
-
-Bulbasaur Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ivysaur Lorem ipsum dolor sit amet, consectetur adipiscing elit. Venusaur Lorem
+Os três programas podem ser encontrados no diretório **tst**.
 
 ### Referências
 

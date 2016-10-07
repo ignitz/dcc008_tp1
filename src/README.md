@@ -33,7 +33,7 @@ $ ./montador [arquivo.a]
 Se desejar especificar o arquivo de saída utilize "-o"
 
 ```
-$ ./montador [arquivo_saida.mif]
+$ ./montador -o [arquivo_saida.mif]
 ```
 
 
