@@ -1,27 +1,27 @@
 
           loadi R0 254
           loadi R1 254
-          storeSP R0 -2
-          storeSP R1 -4
-          moveSP -4
+          storeSp R0 -2
+          storeSp R1 -4
+          moveSp -4
           call _MIN
-          loadSP R0 0
-          moveSP 2
+          loadSp R0 0
+          moveSp 2
           storei R0 254
           exit
-_MIN:     loadSP R0 0
-          loadSP R1 2
-          moveSP 4
+_MIN:     loadSp R0 0
+          loadSp R1 2
+          moveSp 4
           seq R3 R1 R2
           jmpp R3 _IGUAL
           slt R3 R1 R2
           jmpp R3 _MENOR
           sgt R3 R1 R2
           jmpp R3 _MAIOR
-_MENOR:   storeSP R1 -2
+_MENOR:   storeSp R1 -2
           jump _EXIT
-_MAIOR:   storeSP R2 -2
+_MAIOR:   storeSp R2 -2
           jump _EXIT
-_IGUAL:   storeSP R1 -2
-_EXIT:    moveSP -2
+_IGUAL:   storeSp R1 -2
+_EXIT:    moveSp -2
           ret

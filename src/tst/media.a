@@ -1,20 +1,20 @@
 
           loadi R0 254
           loadi R1 254
-          storeSP R0 -2
-          storeSP R1 -4
-          moveSP -4
+          storeSp R0 -2
+          storeSp R1 -4
+          moveSp -4
           call _MEDIA
-          loadSP R0 0
-          moveSP 2
+          loadSp R0 0
+          moveSp 2
           storei R0 254
           exit
-_MEDIA:   loadSP R0 0
-          loadSP R1 2
-          moveSP 4
+_MEDIA:   loadSp R0 0
+          loadSp R1 2
+          moveSp 4
           add R0 R1
           loadc R1 2
-          divide R1 R2
-          storeSP R1 -2
-          moveSP -2
+          divide R0 R1
+          storeSp R0 -2
+          moveSp -2
           ret

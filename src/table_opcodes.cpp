@@ -141,7 +141,7 @@ int
 TableOpcode::get_instruction(std::vector<std::string> fields) {
   int binary, choice, temp;
   binary = choice = this->get_opcode_value(fields[0]);
-
+  
   temp = 0;
   switch (choice) {
     case 0: // EXIT      "exit",     0
