@@ -1,9 +1,0 @@
-loadi R0 254
-loadi R1 254
-storeSp R0 -2
-storeSp R1 -4
-moveSp -4
-loadSp R0 0
-moveSp 2
-storei R0 254
-exit
